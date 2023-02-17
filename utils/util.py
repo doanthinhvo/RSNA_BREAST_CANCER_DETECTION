@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 from itertools import repeat
 from collections import OrderedDict
-
+import gc
 
 def ensure_dir(dirname):
     dirname = Path(dirname)
@@ -65,3 +65,6 @@ class MetricTracker:
 
     def result(self):
         return dict(self._data.average)
+def gc_collect():
+    gc.collect()
+    torch.cuda.empty_cache()

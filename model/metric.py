@@ -1,20 +1,29 @@
-import torch
+import numpy as np
 
+def pfbeta(labels, predictions, beta=1.):
+    y_true_count = 0
+    ctp = 0
+    cfp = 0
 
-def accuracy(output, target):
-    with torch.no_grad():
-        pred = torch.argmax(output, dim=1)
-        assert pred.shape[0] == len(target)
-        correct = 0
-        correct += torch.sum(pred == target).item()
-    return correct / len(target)
+    for idx in range(len(labels)):
+        prediction = min(max(predictions[idx], 0), 1)
+        if (labels[idx]):
+            y_true_count += 1
+            ctp += prediction
+        else:
+            cfp += prediction
 
-
-def top_k_acc(output, target, k=3):
-    with torch.no_grad():
-        pred = torch.topk(output, k, dim=1)[1]
-        assert pred.shape[0] == len(target)
-        correct = 0
-        for i in range(k):
-            correct += torch.sum(pred[:, i] == target).item()
-    return correct / len(target)
+    beta_squared = beta * beta
+    c_precision = ctp / (ctp + cfp)
+    c_recall = ctp / max(y_true_count, 1)  # avoid / 0
+    if (c_precision > 0 and c_recall > 0):
+        result = (1 + beta_squared) * (c_precision * c_recall) / (beta_squared * c_precision + c_recall)
+        return result
+    else:
+        return 0
+    
+def optimal_f1(labels, predictions):
+    thres = np.linspace(0, 1, 101)
+    f1s = [pfbeta(labels, predictions > thr) for thr in thres]
+    idx = np.argmax(f1s)
+    return f1s[idx], thres[idx]

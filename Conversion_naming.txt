@@ -1,0 +1,14 @@
+df: DataFrame
+dataset: Dataset
+dataloader: DataLoader
+
+path: exact file
+dir: folder contains a number of files
+
+
+in one variables name: specific mean first then type of variable
+e.g: cancer_pred
+
+pred and (labels or non post_fix)
+cancer_pred and cancer_labels 
+categories_pred and categories_labels
