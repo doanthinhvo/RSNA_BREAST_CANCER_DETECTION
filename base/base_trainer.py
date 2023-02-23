@@ -39,9 +39,6 @@ class BaseTrainer:
 
         self.checkpoint_dir = config.save_dir
 
-        # setup visualization writer instance                
-        self.writer = TensorboardWriter(config.log_dir, self.logger, cfg_trainer['tensorboard'])
-
         if config.resume is not None:
             self._resume_checkpoint(config.resume)
 
@@ -94,7 +91,7 @@ class BaseTrainer:
                     self.logger.info("Validation performance didn\'t improve for {} epochs. "
                                      "Training stops.".format(self.early_stop))
                     break
-
+            
             if epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
 

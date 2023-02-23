@@ -1,8 +1,11 @@
-import torch 
-y = [torch.tensor([1., 2., 3.]), torch.tensor([4., 5., 6.])]
-softmax_ed = [] 
-for a in y:
-    softmax_ed.append(torch.softmax(a, dim=-1)) # dim=-1 means the last dimension
+import torch
+import torch.nn.functional as F
+input = torch.randn(3, 5, requires_grad=True)
+print(input)
 
-print(y)
-print(softmax_ed)
+target = torch.randint(5, (50,), dtype=torch.int64)
+print(target)
+
+
+loss = F.cross_entropy(input, target)
+print(loss)

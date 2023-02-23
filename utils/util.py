@@ -65,6 +65,7 @@ class MetricTracker:
 
     def result(self):
         return dict(self._data.average)
+    
 def gc_collect():
     gc.collect()
     torch.cuda.empty_cache()

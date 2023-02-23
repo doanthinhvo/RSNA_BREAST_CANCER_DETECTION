@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class BreastCancerDataset(Dataset): 
-    def __init__(self, df, img_dir, mode, categories_classes, transform=None):
+    def __init__(self, df, img_dir, train, categories_classes, transform=None):
         super(BreastCancerDataset, self).__init__() # super() returns a proxy object that allows you to refer parent class by 'self'.
         self.df = df
         self.img_dir = img_dir
         # self.img_size = img_size
-        self.mode = mode
+        self.train = train
         self.categories_classes = categories_classes
         self.transform = transform
 
@@ -29,17 +29,18 @@ class BreastCancerDataset(Dataset):
         if self.transform is not None:
             img = self.transform(img)
 
-        if self.mode=='train':
+        if self.train:
             '''
             cols_values: a tensor of shape (11,), which each element is a class label of each category.(col)'''
             cancer = torch.as_tensor(self.df.iloc[i].cancer)
-            cols_values = torch.as_tensor(self.df.iloc[i][self.categories_class])
+            cols_values = torch.as_tensor(self.df.iloc[i][self.categories_classes])
             return img, cancer, cols_values
             '''
             cancer: torch.Size([])
             cols_values.shape: torch.Size([11])
             cols_values: tensor([1, 1, 1, 0, 0, 0, 3, 4, 0, 1, 5])
             '''
+            
         return img
 
     def __len__(self):
