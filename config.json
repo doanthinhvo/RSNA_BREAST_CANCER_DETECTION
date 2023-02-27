@@ -13,8 +13,8 @@
     "data_loader": {
         "type": "BreastCancerDataloader",
         "args":{
-            "data_dir": "data/RSNA-cut-off-empty-space/",
-            "df_file_path": "data/RSNA-Screening-mamography-breast-cancer-detection/train.csv",
+            "data_dir": "data/archive",
+            "df_file_path": "data/MetaData/train.csv",
             "batch_size": 1,
             "shuffle": true,
             "validation_split": 0.1,

@@ -11,6 +11,7 @@ from trainer import Trainer
 from utils import prepare_device
 
 # fix random seeds for reproducibility
+
 SEED = 123
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True

@@ -19,6 +19,7 @@ class BreastCancerDataset(Dataset):
         path = f'{self.img_dir}/{self.df.iloc[i].patient_id}/{self.df.iloc[i].image_id}.png'
         try:
             img = Image.open(path).convert('RGB')
+            # print(f"first img in dataset: {img.size}")
             # plt.imshow(np.array(img), cmap='gray')
             # plt.title("Before augmentation")
             # plt.show()
@@ -28,6 +29,7 @@ class BreastCancerDataset(Dataset):
 
         if self.transform is not None:
             img = self.transform(img)
+            # print(f"second img in dataset: {img.size}")
 
         if self.train:
             '''
